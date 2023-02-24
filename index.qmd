@@ -38,7 +38,7 @@ Existem diversas histórias quanto à origem do termo Super Bowl. Ao que tudo in
 
 ![](images/super_ball_toy.png){fig-align="center" fig-alt="Foto da bola de brinquedo antiga chamada de Super Ball"}
 
-Há também quem diga que o termo refere-se ao formato dos estádios de futebol americano, que lembram uma tigela. Mas chega de estória, vamos aos dados.
+Há também quem diga que o termo refere-se ao formato dos estádios de futebol americano, que lembram uma tigela (bowl). Mas chega de estória, vamos aos dados.
 
 ```{r}
 super_bowls <- read.csv(file ='dados/super_bowls_2023.csv', sep=';', fileEncoding='UTF-8') |> clean_names() |>
