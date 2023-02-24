@@ -1,0 +1,23 @@
+project:
+  output-dir: relatorio
+title: "Super Bowl - Estatísticas e curiosidades"
+date: 02/23/2023
+author: "Rafael Rodisanski Patricio"
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: darkly
+    css: styles.css
+    toc: true
+execute:
+  echo: false
+  warning: false
+  message: false
+editor: visual
+lang: pt
+bibliography:
+  - references.bib
+  # - packages.bib
+# csl: abnt.csl
+

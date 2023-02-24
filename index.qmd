@@ -1,0 +1,340 @@
+```{r}
+#install.packages("tidyverse")
+#install.packages("readr")
+#install.packages("janitor")
+#install.packages("dplyr")
+#install.packages("parzer")
+#install.packages("leaflet")
+#install.packages("lubridate")
+```
+
+```{r}
+library(tidyverse)
+library(readr)
+library(janitor)
+library(dplyr)
+library(parzer)
+library(leaflet)
+library(lubridate)
+```
+
+```{r}
+knitr::write_bib(x = c("tidyverse", "readr", "janitor", "dplyr", "parzer", "leaflet", "lubridate"), file = "packages.bib")
+```
+
+![](images/super_bowl_intro.jpg){fig-align="center" fig-alt="Imagem de uma bola de futebol americano posicionada no gramado do estádio iluminado, pronta para ser chutada."}
+
+# Introdução
+
+O Super Bowl é o evento mais esperado por todos os fãs de futebol americano (também conhecido como football). Trata-se do jogo final da NFL (National League Footbal), no qual o time campeão da Conferência Nacional (NFC) enfrenta o campeão da Conferência Americana (AFC), em um jogo único, para decidir quem será o campeão da temporada. Complicações à parte, é um dos maiores eventos esportivos, assistido anualmente por milhões de pessoas e que representa a grande decisão do ano para o futebol americano, esporte que cada vez mais se populariza em outros países, como o Brasil. O objetivo deste breve artigo é, a partir de análises estatísticas do histórico dos jogos desde sua criação, datada de 1967, apresentar algumas curiosidades sobre o Super Bowl.
+
+# Dataset utilizado
+
+À procura de um conjunto de dados pronto e organizado, deparei-me com um [kaggle](https://www.kaggle.com/datasets/timoboz/superbowl-history-1967-2020) bastante interessante contendo dados históricos do Super Bowl. No entanto, por ele estar ligeiramente desatualizado (contém dados apenas até 2020) e também por querer apresentar algumas outras informações, resolvi criar meu próprio dataset a partir de dados disponíveis sobre os Super Bowls [-@pro_football_reference_super_bowls], times [-@pro_football_reference_teams], estádios [-@pro_football_reference_stadiums; -@wikipedia], audiência [-@nielsen] e índices inflacionários [-@minneapolis_fed].
+
+# 1 - Rose Bowl, Super Ball e Super Tigela
+
+Existem diversas histórias quanto à origem do termo Super Bowl. Ao que tudo indica, o termo foi criado por Lamar Hunt e utilizado desde a 3ª edição do evento. Alguns dizem que Hunt tenha se inspirado no termo "Rose Bowl", nome existente desde 1923 de um dos títulos mais importantes do futebol americano universitário. Outros dizem que ele tenha criado esse termo após ver sua filha brincar com uma bola e perguntar para ela qual era o nome daquele brinquedo. Adivinha a resposta...
+
+![](images/super_ball_toy.png){fig-align="center" fig-alt="Foto da bola de brinquedo antiga chamada de Super Ball"}
+
+Há também quem diga que o termo refere-se ao formato dos estádios de futebol americano, que lembram uma tigela. Mas chega de estória, vamos aos dados.
+
+```{r}
+super_bowls <- read.csv(file ='dados/super_bowls_2023.csv', sep=';', fileEncoding='UTF-8') |> clean_names() |>
+  mutate(date_ajustado = mdy(date),
+         ano = year(date_ajustado),
+         date_pt = format(date_ajustado, "%d/%m/%Y"),
+         dia_semana = format(date_ajustado, "%A"))
+
+times_nfl <- read.csv('dados/times_nfl_2022.csv', sep=';', fileEncoding='UTF-8') |> clean_names()
+
+estadios_nfl <- read.csv('dados/estadios_nfl.csv', sep=';', fileEncoding='UTF-8') |> clean_names()
+
+audiencia_super_bowls <- read.csv('dados/audiencia_super_bowls_2023.csv', sep=';', fileEncoding='UTF-8') |> clean_names() |>
+  mutate(date_ajustado = mdy(date),
+         ano = year(date_ajustado))
+```
+
+# 2 - Final no começo? Romanos resolvem
+
+Uma primeira análise exploratória dos dados já nos revela dois fatos interessantes.
+
+```{r}
+nomes_datas <- na_if(super_bowls, '') |> drop_na() |> select(super_bowl, date_pt, dia_semana)
+```
+
+```{r}
+nomes_datas <- nomes_datas[, c(2, 3, 1)]
+```
+
+```{r}
+nomes_datas |>
+  slice(1:8) |>
+  knitr::kable(col.names = c("Data", "Dia da semana", "Super Bowl"))
+```
+
+Sim, o jogo final da NFL ocorre nos meses iniciais do ano. Além disso, em toda sua história, o Super Bowl sempre foi realizado aos domingos. Em 2004, o "Super Sunday" ficou definido para ocorrer no primeiro domingo de fevereiro e, mais recentemente, modificado para o segundo domingo de fevereiro. Como o campeonato inicia-se por volta de setembro e termina apenas no início do ano seguinte, para que não ocorresse confusão em relação à qual ano o evento se refere, desde a 5ª edição foram adotados algarismos romanos em sua nomenclatura (com exceção da quinquagésima edição, tratada como 50 mesmo).
+
+# 3 - Melhor que a partida não seja fria
+
+Tradicionalmente o Super Bowl não é realizado em locais que apresentem temperaturas abaixo de 10 ºC, a não ser que o estádio seja coberto ou tenha teto retrátil. Por isso, a maioria das edições foram realizadas em cidades mais quentes, localizadas mais ao sul do país.
+
+```{r}
+geo_estadios <- unique(super_bowls[,c('coord_lat','coord_long', 'state', 'city')])
+geo_estadios <- na_if(geo_estadios, '') |> drop_na()
+```
+
+```{r}
+geo_estadios_mapa <- geo_estadios |> 
+  dplyr::mutate(lat = parzer::parse_lat(coord_lat),
+                lon = parzer::parse_lon(coord_long))
+```
+
+```{r}
+nfl_ball_icon <- makeIcon(
+  iconUrl = 'images/nfl-ball.png',
+  iconWidth = 32, iconHeight = 32
+)
+```
+
+```{r}
+leaflet::leaflet(data = geo_estadios_mapa) |> 
+  leaflet::addMarkers(lng = ~lon, lat = ~lat, icon=nfl_ball_icon, label = ~city) |>
+  leaflet::addProviderTiles(provider = "Esri.WorldImagery")
+```
+
+# 4 - Mudam-se de cidades, mudam-se os nomes
+
+Os times que disputam a NFL são franquias que atuam como empresas, fazendo parcerias com a liga e com as cidades. Nem sempre essa associação com a cidade dá certo e os donos do time podem mudá-lo de lugar (por exemplo, por baixa adesão do público, concorrência com outros times e esportes, oportunidade de estádios melhores ou maiores perspectivas de negócios). Com a mudança de local, os times acabam mudando também de nome. Por isso, temos Oakland Raiders e Los Angeles Raiders (atualmente Las Vegas Raiders) como campeões do Super Bowl. Ou os também campeões St. Louis Rams e Los Angeles Rams. Desse modo, o dataset teve que ser tratado para considerar parcialmente o nome dos times.
+
+```{r}
+times <- na_if(super_bowls, '') |> drop_na()
+```
+
+```{r}
+times_outros_nomes <- unique(grep(paste(c("Raiders", "Rams", "Washington"),collapse="|"), 
+                        times$winner, value=TRUE))
+```
+
+```{r}
+times_outros_nomes |>
+ knitr::kable(col.names = c("Exemplos de times campeões do Super Bowl que mudaram de nome"))
+```
+
+Outra alteração foi a do Washington Redskins, que mudou seu nome provisoriamente em 2020 para Washington Football Team, e em 2022 para Washington Commanders. O termo "redskins" (peles vermelhas) era uma referência aos povos indígenas nativos dos Estados Unidos e passou a ser considerado racista.
+
+![](images/washington_helmets.png){fig-align="center" fig-alt="Foto dos diversos capacetes utilizados durante o processo de alteração de nome dos Washington Commanders."}
+
+```{r}
+times_nfl_apelido <- times_nfl |> 
+  mutate(apelido = word(team, start = -1))
+times_nfl_apelido$apelido[times_nfl_apelido$apelido == 'Redskins'] <- 'Commanders'
+
+times_apelido <- times |> 
+  mutate(apelido_vencedor = word(winner, start = -1))
+times_apelido <- times_apelido |> 
+  mutate(apelido_perdedor = word(loser, start = -1))
+times_apelido$apelido_vencedor[times_apelido$apelido_vencedor == 'Redskins'] <- 'Commanders'
+times_apelido$apelido_perdedor[times_apelido$apelido_perdedor == 'Redskins'] <- 'Commanders'
+
+```
+
+# 5 - O importante é participar
+
+```{r}
+times_apelido <- times_apelido |>
+  group_by(apelido_vencedor) |>
+  mutate(num_vitorias = n()) |>
+  ungroup()
+  
+times_apelido <- times_apelido |>
+  group_by(apelido_perdedor) |>
+  mutate(num_derrotas = n()) |>
+  ungroup()
+```
+
+```{r}
+times_resumo <- times_nfl_apelido |> left_join(unique(times_apelido |> select(apelido_vencedor, num_vitorias)), by = c("apelido" = "apelido_vencedor"))
+
+times_resumo <- times_resumo |> left_join(unique(times_apelido |> select(apelido_perdedor, num_derrotas)), by = c("apelido" = "apelido_perdedor"))
+
+times_resumo$num_participacoes <- rowSums(times_resumo[,c("num_vitorias", "num_derrotas")], na.rm=TRUE)
+```
+
+```{r}
+times_resumo <- times_resumo |> pivot_longer(cols = c('num_vitorias', 'num_derrotas'), names_to='evento', values_to='numero')
+```
+
+```{r}
+times_resumo <- times_resumo |> 
+  mutate(numero = coalesce(numero, 0))
+```
+
+```{r}
+times_perdedores <- times_resumo |>
+  filter(grepl('num_vitorias', evento) & times_resumo$num_participacoes > 0 & times_resumo$numero == 0)
+```
+
+```{r}
+times_perdedores_derrotas <- times_resumo |>
+  filter(grepl(paste(times_perdedores$team, collapse="|"), team) &
+           grepl('num_derrotas', evento))
+```
+
+```{r}
+times_nunca_participaram <- filter(times_resumo, num_participacoes == 0) |> distinct(team)
+```
+
+Apesar da NFL adotar um sistema de franquias e tomar algumas medidas para manter todos os times equilibrados em termos de competição, mais de um terço dos times nunca ganhou um Super Bowl. Dos `r nrow(times_nfl)` times, `r nrow(times_perdedores_derrotas) + nrow(times_nunca_participaram)` nunca conquistaram o título, sendo que `r nrow(times_nunca_participaram)` deles sequer chegaram a participar de um Super Bowl.
+
+```{r}
+#| fig-align: center
+#| dpi: 300
+#| out-width: 95%
+#| fig-alt: "Gráfico mostrando os 8 times que disputaram o Super Bowl, mas nunca venceram. Minnesota Vikings e Buffalo Bills são os times que nunca ganharam o título e que mais possuem derrotas, com quatro insucessos cada."
+times_perdedores_derrotas |>
+  mutate(team = fct_reorder(team, numero)) |>
+  ggplot(aes(y=team, x=numero)) + 
+    geom_bar(fill="#F8766D", position="stack", stat="identity", show.legend = FALSE) + 
+    labs(title= "Times que já participaram, mas nunca ganharam um Super Bowl",
+         y = element_blank(),
+         x = "Número de derrotas em Super Bowls")
+```
+
+```{r}
+times_nunca_participaram |>
+   knitr::kable(col.names = c("Times que nunca participaram de um Super Bowl"))
+```
+
+# 6 - Nah, o importante é vencer!
+
+```{r}
+times_vencedores <- times_resumo |>
+  filter(grepl('num_vitorias', evento) & times_resumo$numero > 0)
+```
+
+```{r}
+maiores_vencedores <- times_vencedores |>
+    top_n(n = 1, wt = numero)
+```
+
+Por outro lado, alguns times são grandes vencedores do evento. `r knitr::combine_words(unique(maiores_vencedores$team), and = " e ", oxford_comma = FALSE)` são os que possuem mais títulos, com `r max(times_vencedores$numero)` conquistas.
+
+```{r}
+#| fig-align: center
+#| dpi: 300
+#| out-width: 95%
+#| fig-alt: "Gráfico mostrando os 20 times que possuem vitórias em Super Bowls. Os times que venceram mais vezes são New England Patriots e Pittsburgh Steelers, com seis títulos cada."
+times_vencedores |>
+  mutate(team = fct_reorder(team, numero)) |>
+  ggplot(aes(y=team, x=numero)) + 
+    geom_bar(fill="#619CFF", position="stack", stat="identity", show.legend = FALSE) + 
+    labs(title= "Times que mais ganharam um Super Bowl",
+         y = element_blank(),
+         x = "Número de vitórias em Super Bowls")
+```
+
+# 7 - Ao vencedor, o troféu
+
+O troféu do Super Bowl é chamado de Troféu Lombardi desde 1970, em homenagem ao técnico Vince Thomas Lombardi (primeiro treinador campeão do Super Bowl, vencedor das edições I e II com os Packers). O troféu é anualmente produzido, sem mudanças visuais significativas desde a primeira edição, pela Tiffany & Co. e tem um custo de cerca de 50.000 dólares. Feito em prata, este troféu bastante difícil de conquistar é muito fácil de levantar, pois pesa apenas pouco mais de 3 quilos.
+
+![](images/super_bowl_trophy.jpg){fig-align="center" fig-alt="Foto do momento em que o Troféu Lombardi é erguido com apenas uma das mãos em comemoração à vitória no Super Bowl."}
+
+# 8 - Aos vencedores, os anéis
+
+Além do troféu, os vencedores do Super Bowl (e isso engloba jogadores, comissão técnica, executivos, membros da organização etc.) recebem, como premiação pelo trabalho, anéis repletos de diamantes.
+
+![](images/super_bowl_rings.jpg){fig-align="center" fig-alt="Foto de Tom Brady mostrando suas mãos enquanto usa os sete anéis que ganhou nos Super Bowls."}
+
+Tom Brady (também conhecido no Brasil como ex-Giselo) é o jogador com maior número de vitórias no Super Bowl. Sim, isso mesmo. O "Pelé" do futebol americano ganhou nada mais do que 7 Super Bowls. Ou seja, ele possui sozinho mais títulos em sua carreira do que qualquer time da NFL.
+
+```{r}
+times_vencedores_brady <- times_vencedores
+add_data = data.frame(team = c("Tom Brady"), evento = c("num_vitorias"), numero = c(7))
+times_vencedores_brady <- bind_rows(times_vencedores_brady, add_data)
+```
+
+```{r}
+#| fig-align: center
+#| dpi: 300
+#| out-width: 95%
+#| fig-alt: "Gráfico mostrando o número de vitórias em Super Bowls de Tom Brady e dos times da NFL. Enquanto Tom Brady foi campeão sete vezes em sua carreira, os times com maior número de vitórias (New England Patriots e Pittsburgh Steelers) têm seis títulos cada."
+times_vencedores_brady |>
+  mutate(team = fct_reorder(team, numero)) |>
+  ggplot(aes(fill = ifelse(team == "Tom Brady", "Highlighted", "Normal"), y=team, x=numero)) + 
+  scale_fill_manual(values = c("Highlighted" = "#CD9600", "Normal" = "#619CFF")) +
+    geom_bar(position="stack", stat="identity", show.legend = FALSE) +
+    labs(title= "Os maiores vencedores da história do Super Bowl",
+         y = element_blank(),
+         x = "Número de vitórias em Super Bowls")
+```
+
+# 9 - Transmissões para milhões
+
+O maior evento esportivo dos Estados Unidos possui uma enorme audiência de milhões de telespectadores. Das 20 maiores audiências da história da televisão estadunidense, 19 são edições do Super Bowl.
+
+```{r}
+audiencia_resumo <- audiencia_super_bowls
+```
+
+```{r}
+audiencia_resumo_total <- audiencia_resumo |>
+  group_by(ano) |>
+  summarise(audiencia = (sum(total_viewers_p2)/1000000))
+```
+
+```{r}
+#| fig-align: center
+#| dpi: 300
+#| out-width: 95%
+#| fig-alt: "Gráfico mostrando a variação do número de telespectadores ao longo da história do Super Bowl. De forma geral, observa-se crescimento durante o período. Em 2023, a audiência foi de aproximadamente 113 milhões de telespectadores."
+ggplot(audiencia_resumo_total, aes(x = ano, y = audiencia)) +
+  geom_line(color="#619CFF", size = 1) +
+  labs(title= "Audiência do Super Bowl ao longo da história",
+         y = "Número de telespectadores (em milhões)",
+         x = element_blank())
+```
+
+# 10 - Não é apenas sobre o jogo
+
+O Super Bowl é assistido por diversos motivos. Claro, o jogo é a principal atração, mas há aqueles que assistem para ver o chamado halftime show (show do intervalo). Grandes artistas já fizeram apresentações nos gramados do Super Bowl, como Michael Jackson, U2, Madonna, Justin Timberlake, Beyoncé, Coldplay e, mais recentemente, Rihanna (isso apenas para citar alguns).
+
+![](images/super_bowl_shows.jpg){fig-align="center" fig-alt="Fotos de Justin Timberlake, Michael Jackson e Beyoncé durante suas apresentações no intervalo do Super Bowl."}
+
+Também há quem assista à partida apenas para ver os comerciais. Sim, os Super Bowl Ads são considerados uma atração à parte. Dada a grande audiência e repercussão, meros 30 segundos de exibição na transmissão custam alguns milhões.
+
+```{r}
+comerciais_resumo <- audiencia_super_bowls
+```
+
+```{r}
+comerciais_resumo_medias <- comerciais_resumo |>
+  group_by(ano) |>
+  summarise(media_cost_per_30_second_spot = (mean(cost_per_30_second_spot)/1000000),
+            media_cost_per_30_second_2022_inflation_adjusted = (mean(cost_per_30_second_2022_inflation_adjusted)/1000000))
+```
+
+```{r}
+comerciais_resumo_medias <- comerciais_resumo_medias |> pivot_longer(cols = c('media_cost_per_30_second_spot', 'media_cost_per_30_second_2022_inflation_adjusted'), names_to='tipo_de_custo', values_to='valor')
+```
+
+```{r}
+#| fig-align: center
+#| dpi: 300
+#| out-width: 95%
+#| fig-alt: "Gráfico mostrando a valorização do tempo de intervalo comercial ao longo da história do Super Bowl. O preço médio por 30 segundos de exibição em 2023 foi de 7 milhões de dólares."
+ggplot(comerciais_resumo_medias, aes(x = ano, y = valor, col = tipo_de_custo)) +
+  geom_line(size = 1) +
+  labs(title= "Preço do intervalo comercial do Super Bowl ao longo da história",
+         y = "Preço médio em dólar por 30 segundos de exibição (em milhões)",
+         x = element_blank()) + scale_colour_discrete(name = element_blank(), labels = c("Preço médio ajustado pela inflação", "Preço médio"), guide = guide_legend(reverse=TRUE)) + theme(legend.position="bottom")
+```
+
+# Conclusão
+
+O Super Bowl é um evento grandioso, repleto de estatísticas e curiosidades. Neste artigo foram apresentadas apenas algumas delas, mas facilmente muitas outras poderiam ter sido abordadas. Obrigado pela leitura e até o próximo Super Bowl!
+
+![](images/minions_super_bowl.gif){fig-align="center" fig-alt="Animação de um minion que corre para chutar uma bola de futebol americano mas, em vez de chutar a bola, acaba chuta um outro minion que a estava segurando."}
+
+Esse trabalho foi feito com [Quarto](https://quarto.org/docs/get-started/).

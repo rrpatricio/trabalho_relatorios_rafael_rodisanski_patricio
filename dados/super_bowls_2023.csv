@@ -1,0 +1,58 @@
+﻿Edition;Super Bowl;Date;Winner;Pts win;Loser;Pts lose;MVP;Stadium;Coord lat;Coord long;City;State
+57;LVII;Feb 12, 2023;Kansas City Chiefs;38;Philadelphia Eagles;35;Patrick Mahomes;State Farm Stadium;"033º31'39.720""N";"112º15'45.390""W";Glendale;Arizona
+56;LVI;Feb 13, 2022;Los Angeles Rams;23;Cincinnati Bengals;20;Cooper Kupp;SoFi Stadium;"033º57'01.400""N";"118º20'16.800""W";Inglewood;California
+55;LV;Feb 7, 2021;Tampa Bay Buccaneers;31;Kansas City Chiefs;9;Tom Brady;Raymond James Stadium;"027º58'33.480""N";"082º30'12.060""W";Tampa;Florida
+54;LIV;Feb 2, 2020;Kansas City Chiefs;31;San Francisco 49ers;20;Patrick Mahomes;Hard Rock Stadium;"025º57'28.510""N";"080º14'19.830""W";Miami Gardens;Florida
+53;LIII;Feb 3, 2019;New England Patriots;13;Los Angeles Rams;3;Julian Edelman;Mercedes-Benz Stadium;"033º45'20.000""N";"084º24'00.000""W";Atlanta;Georgia
+52;LII;Feb 4, 2018;Philadelphia Eagles;41;New England Patriots;33;Nick Foles;U.S. Bank Stadium;"044º58'26.400""N";"093º15'28.800""W";Minneapolis;Minnesota
+51;LI;Feb 5, 2017;New England Patriots;34;Atlanta Falcons;28;Tom Brady;NRG Stadium;"029º41'05.210""N";"095º24'39.440""W";Houston;Texas
+50;SB 50;Feb 7, 2016;Denver Broncos;24;Carolina Panthers;10;Von Miller;Levi's Stadium;"037º24'10.800""N";"121º58'12.000""W";Santa Clara;California
+49;XLIX;Feb 1, 2015;New England Patriots;28;Seattle Seahawks;24;Tom Brady;University of Phoenix Stadium;"033º31'39.720""N";"112º15'45.390""W";Glendale;Arizona
+48;XLVIII;Feb 2, 2014;Seattle Seahawks;43;Denver Broncos;8;Malcolm Smith;MetLife Stadium;"040º48'49.000""N";"074º04'28.000""W";East Rutherford;New Jersey
+47;XLVII;Feb 3, 2013;Baltimore Ravens;34;San Francisco 49ers;31;Joe Flacco;Mercedes-Benz Superdome;"029º57'03.000""N";"090º04'52.000""W";New Orleans;Louisiana
+46;XLVI;Feb 5, 2012;New York Giants;21;New England Patriots;17;Eli Manning;Lucas Oil Stadium;"039º45'36.200""N";"086º09'49.700""W";Indianapolis;Indiana
+45;XLV;Feb 6, 2011;Green Bay Packers;31;Pittsburgh Steelers;25;Aaron Rodgers;Cowboys Stadium;"032º44'52.000""N";"097º05'34.000""W";Arlington;Texas
+44;XLIV;Feb 7, 2010;New Orleans Saints;31;Indianapolis Colts;17;Drew Brees;Sun Life Stadium;"025º57'28.510""N";"080º14'19.830""W";Miami Gardens;Florida
+43;XLIII;Feb 1, 2009;Pittsburgh Steelers;27;Arizona Cardinals;23;Santonio Holmes;Raymond James Stadium;"027º58'33.480""N";"082º30'12.060""W";Tampa;Florida
+42;XLII;Feb 3, 2008;New York Giants;17;New England Patriots;14;Eli Manning;University of Phoenix Stadium;"033º31'39.720""N";"112º15'45.390""W";Glendale;Arizona
+41;XLI;Feb 4, 2007;Indianapolis Colts;29;Chicago Bears;17;Peyton Manning+;Dolphin Stadium;"025º57'28.510""N";"080º14'19.830""W";Miami Gardens;Florida
+40;XL;Feb 5, 2006;Pittsburgh Steelers;21;Seattle Seahawks;10;Hines Ward;Ford Field;"042º20'24.560""N";"083º02'44.910""W";Detroit;Michigan
+39;XXXIX;Feb 6, 2005;New England Patriots;24;Philadelphia Eagles;21;Deion Branch;Alltel Stadium;"030º19'26.130""N";"081º38'14.480""W";Jacksonville;Florida
+38;XXXVIII;Feb 1, 2004;New England Patriots;32;Carolina Panthers;29;Tom Brady;Reliant Stadium;"029º41'05.210""N";"095º24'39.440""W";Houston;Texas
+37;XXXVII;Jan 26, 2003;Tampa Bay Buccaneers;48;Oakland Raiders;21;Dexter Jackson;Qualcomm Stadium;"032º46'59.120""N";"117º07'10.480""W";San Diego;California
+36;XXXVI;Feb 3, 2002;New England Patriots;20;St. Louis Rams;17;Tom Brady;Louisiana Superdome;"029º57'03.000""N";"090º04'52.000""W";New Orleans;Louisiana
+35;XXXV;Jan 28, 2001;Baltimore Ravens;34;New York Giants;7;Ray Lewis+;Raymond James Stadium;"027º58'33.480""N";"082º30'12.060""W";Tampa;Florida
+34;XXXIV;Jan 30, 2000;St. Louis Rams;23;Tennessee Titans;16;Kurt Warner+;Georgia Dome;"033º45'27.410""N";"084º24'03.500""W";Atlanta;Georgia
+33;XXXIII;Jan 31, 1999;Denver Broncos;34;Atlanta Falcons;19;John Elway+;Pro Player Stadium;"025º57'28.510""N";"080º14'19.830""W";Miami Gardens;Florida
+32;XXXII;Jan 25, 1998;Denver Broncos;31;Green Bay Packers;24;Terrell Davis+;Qualcomm Stadium;"032º46'59.120""N";"117º07'10.480""W";San Diego;California
+31;XXXI;Jan 26, 1997;Green Bay Packers;35;New England Patriots;21;Desmond Howard;Louisiana Superdome;"029º57'03.000""N";"090º04'52.000""W";New Orleans;Louisiana
+30;XXX;Jan 28, 1996;Dallas Cowboys;27;Pittsburgh Steelers;17;Larry Brown;Sun Devil Stadium;"033º25'35.000""N";"111º55'57.000""W";Tempe;Arizona
+29;XXIX;Jan 29, 1995;San Francisco 49ers;49;San Diego Chargers;26;Steve Young+;Joe Robbie Stadium;"025º57'28.510""N";"080º14'19.830""W";Miami Gardens;Florida
+28;XXVIII;Jan 30, 1994;Dallas Cowboys;30;Buffalo Bills;13;Emmitt Smith+;Georgia Dome;"033º45'27.410""N";"084º24'03.500""W";Atlanta;Georgia
+27;XXVII;Jan 31, 1993;Dallas Cowboys;52;Buffalo Bills;17;Troy Aikman+;Rose Bowl;"034º09'40.780""N";"118º10'03.400""W";Pasadena;California
+26;XXVI;Jan 26, 1992;Washington Redskins;37;Buffalo Bills;24;Mark Rypien;Metrodome;"044º58'25.970""N";"093º15'29.140""W";Minneapolis;Minnesota
+25;XXV;Jan 27, 1991;New York Giants;20;Buffalo Bills;19;Ottis Anderson;Tampa Stadium;"027º58'44.000""N";"082º30'13.000""W";Tampa;Florida
+24;XXIV;Jan 28, 1990;San Francisco 49ers;55;Denver Broncos;10;Joe Montana+;Louisiana Superdome;"029º57'03.000""N";"090º04'52.000""W";New Orleans;Louisiana
+23;XXIII;Jan 22, 1989;San Francisco 49ers;20;Cincinnati Bengals;16;Jerry Rice+;Joe Robbie Stadium;"025º57'28.510""N";"080º14'19.830""W";Miami Gardens;Florida
+22;XXII;Jan 31, 1988;Washington Redskins;42;Denver Broncos;10;Doug Williams;Jack Murphy Stadium;"032º46'59.120""N";"117º07'10.480""W";San Diego;California
+21;XXI;Jan 25, 1987;New York Giants;39;Denver Broncos;20;Phil Simms;Rose Bowl;"034º09'40.780""N";"118º10'03.400""W";Pasadena;California
+20;XX;Jan 26, 1986;Chicago Bears;46;New England Patriots;10;Richard Dent+;Louisiana Superdome;"029º57'03.000""N";"090º04'52.000""W";New Orleans;Louisiana
+19;XIX;Jan 20, 1985;San Francisco 49ers;38;Miami Dolphins;16;Joe Montana+;Stanford Stadium;"037º26'04.320""N";"122º09'40.080""W";Palo Alto;California
+18;XVIII;Jan 22, 1984;Los Angeles Raiders;38;Washington Redskins;9;Marcus Allen+;Tampa Stadium;"027º58'44.000""N";"082º30'13.000""W";Tampa;Florida
+17;XVII;Jan 30, 1983;Washington Redskins;27;Miami Dolphins;17;John Riggins+;Rose Bowl;"034º09'40.780""N";"118º10'03.400""W";Pasadena;California
+16;XVI;Jan 24, 1982;San Francisco 49ers;26;Cincinnati Bengals;21;Joe Montana+;Pontiac Silverdome;"042º38'44.590""N";"083º15'16.840""W";Pontiac;Michigan
+15;XV;Jan 25, 1981;Oakland Raiders;27;Philadelphia Eagles;10;Jim Plunkett;Louisiana Superdome;"029º57'03.000""N";"090º04'52.000""W";New Orleans;Louisiana
+14;XIV;Jan 20, 1980;Pittsburgh Steelers;31;Los Angeles Rams;19;Terry Bradshaw+;Rose Bowl;"034º09'40.780""N";"118º10'03.400""W";Pasadena;California
+13;XIII;Jan 21, 1979;Pittsburgh Steelers;35;Dallas Cowboys;31;Terry Bradshaw+;Orange Bowl;"025º46'40.900""N";"080º13'11.300""W";Miami;Florida
+12;XII;Jan 15, 1978;Dallas Cowboys;27;Denver Broncos;10;Harvey MartinRandy White+;Louisiana Superdome;"029º57'03.000""N";"090º04'52.000""W";New Orleans;Louisiana
+11;XI;Jan 9, 1977;Oakland Raiders;32;Minnesota Vikings;14;Fred Biletnikoff+;Rose Bowl;"034º09'40.780""N";"118º10'03.400""W";Pasadena;California
+10;X;Jan 18, 1976;Pittsburgh Steelers;21;Dallas Cowboys;17;Lynn Swann+;Orange Bowl;"025º46'40.900""N";"080º13'11.300""W";Miami;Florida
+9;IX;Jan 12, 1975;Pittsburgh Steelers;16;Minnesota Vikings;6;Franco Harris+;Tulane Stadium;"029º56'34.000""N";"090º07'03.000""W";New Orleans;Louisiana
+8;VIII;Jan 13, 1974;Miami Dolphins;24;Minnesota Vikings;7;Larry Csonka+;Rice Stadium;"029º42'59.000""N";"095º24'33.000""W";Houston;Texas
+7;VII;Jan 14, 1973;Miami Dolphins;14;Washington Redskins;7;Jake Scott;Memorial Coliseum;"034º00'50.400""N";"118º17'16.200""W";Los Angeles;California
+6;VI;Jan 16, 1972;Dallas Cowboys;24;Miami Dolphins;3;Roger Staubach+;Tulane Stadium;"029º56'34.000""N";"090º07'03.000""W";New Orleans;Louisiana
+5;V;Jan 17, 1971;Baltimore Colts;16;Dallas Cowboys;13;Chuck Howley+;Orange Bowl;"025º46'40.900""N";"080º13'11.300""W";Miami;Florida
+4;IV;Jan 11, 1970;Kansas City Chiefs;23;Minnesota Vikings;7;Len Dawson+;Tulane Stadium;"029º56'34.000""N";"090º07'03.000""W";New Orleans;Louisiana
+3;III;Jan 12, 1969;New York Jets;16;Baltimore Colts;7;Joe Namath+;Orange Bowl;"025º46'40.900""N";"080º13'11.300""W";Miami;Florida
+2;II;Jan 14, 1968;Green Bay Packers;33;Oakland Raiders;14;Bart Starr+;Orange Bowl;"025º46'40.900""N";"080º13'11.300""W";Miami;Florida
+1;I;Jan 15, 1967;Green Bay Packers;35;Kansas City Chiefs;10;Bart Starr+;Memorial Coliseum;"034º00'50.400""N";"118º17'16.200""W";Los Angeles;California
