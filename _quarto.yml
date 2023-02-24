@@ -1,5 +1,5 @@
 project:
-  output-dir: relatorio
+  output-dir: docs
 title: "Super Bowl - Estatísticas e curiosidades"
 date: 02/23/2023
 author: "Rafael Rodisanski Patricio"
